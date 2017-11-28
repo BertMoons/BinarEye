@@ -1,0 +1,9 @@
+*.txt
+*.pyc
+*.npy
+*.npyc
+*.npz
+*.sh
+*/train_val_data
+*/tools
+
