@@ -133,11 +133,54 @@ if __name__ == "__main__":
     
     shuffle_parts = 1
     print("shuffle_parts = "+str(shuffle_parts))
+   
     
-    val_directory = '/volume1/users/bmoons/CUSTOM_OWNER_RECOGNITION/val'
-    train_directory = '/volume1/users/bmoons/CUSTOM_OWNER_RECOGNITION/train'
+    print('Loading BinarySense Owner Detection dataset...')
+    basepath='volume1/users/bmoons/CUSTOM_OWNER_RECOGNITION/numpy'
+    train_set_X = np.load(basepath + 'train_set_x.npy')
+    valid_set_X = np.load(basepath + 'valid_set_x.npy')
+    test_set_X = np.load(basepath + 'valid_set_x.npy')
+
+    train_set_Y = np.load(basepath + 'train_set_y.npy')
+    valid_set_Y = np.load(basepath + 'valid_set_y.npy')
+    test_set_Y = np.load(basepath + 'valid_set_y.npy') 
+
+
+    # bc01 format
+    # Inputs in the range [-1,+1]
+    train_set_X = np.reshape(np.subtract(np.multiply(2./255.,train_set_X),1.),(-1,3,32,32))
+    valid_set_X = np.reshape(np.subtract(np.multiply(2./255.,valid_set_X),1.),(-1,3,32,32))
+    test_set_X = np.reshape(np.subtract(np.multiply(2./255.,test_set_X),1.),(-1,3,32,32))
+
+    # Number of feature maps
+    num_maps = np.floor(256./(channels*(256/num_filters))) # 256/3 input channels
+
+    # Quantize
+    s = train_set_X / np.abs(train_set_X)
+    train_set_X=(2*(s*np.ceil(np.abs(train_set_X)*num_maps/2))-s*1).astype('float32')
+    # Quantize
+    s = valid_set_X / np.abs(valid_set_X)
+    valid_set_X=(2*(s*np.ceil(np.abs(valid_set_X)*num_maps/2))-s*1).astype('float32')
+    # Quantize
+    s = test_set_X / np.abs(test_set_X)
+    test_set_X=(2*(s*np.ceil(np.abs(test_set_X)*num_maps/2))-s*1).astype('float32')
     
-    print('Loading BinarySense Face Detection dataset...')
+    # Onehot the targets
+    train_set_Y = np.float32(np.eye(10)[train_set_Y.astype(np.int)])    
+    valid_set_Y = np.float32(np.eye(10)[valid_set_Y.astype(np.int)])
+    test_set_Y = np.float32(np.eye(10)[test_set_Y.astype(np.int)])
+    
+    # for hinge loss
+    train_set_Y = 2* train_set_Y - 1.
+    valid_set_Y = 2* valid_set_Y - 1.
+    test_set_Y = 2* test_set_Y - 1.  
+
+
+    # enlarge train data set by mirroring
+    x_train_flip = train_set_X[:,:,:,::-1]
+    y_train_flip = train_set_Y
+    train_set_X = np.concatenate((train_set_X,x_train_flip),axis=0)
+    train_set_Y = np.concatenate((train_set_Y,y_train_flip),axis=0)
 
     print('Building the CNN...') 
     
@@ -198,9 +241,12 @@ if __name__ == "__main__":
             train_fn,val_fn,
             cnn,
             batch_size,
-            LR_start, LR_, LR_decay,num_filters,run_name,val_directory,train_directory,
+            LR_start, LR_, LR_decay,num_filters,run_name,
+            train_set.X,train_set.y,
+            valid_set.X,valid_set.y,
+            test_set.X,test_set.y,
             num_epochs,
-	    	save_path=save_path,
+            save_path=save_path,
             shuffle_parts=shuffle_parts)
 
     '''

@@ -155,7 +155,7 @@ if __name__ == "__main__":
     test_set_X = np.reshape(np.subtract(np.multiply(2./255.,test_set_X),1.),(-1,3,32,32))
 
     # Number of feature maps
-    num_maps = 85 # 256/3 input channels
+    num_maps = np.floor(256./(channels*(256/num_filters))) # 256/3 input channels
 
     # Quantize
     s = train_set_X / np.abs(train_set_X)

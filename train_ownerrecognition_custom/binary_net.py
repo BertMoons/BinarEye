@@ -224,7 +224,10 @@ def clipping_scaling(updates,network):
 def train(train_fn,val_fn,
             model,
             batch_size,
-            LR, LR_, LR_decay,num_filters,run_name, val_directory, train_directory,
+            LR, LR_, LR_decay,num_filters,run_name,
+            train_x,train_y,
+            val_x,val_y,
+            test_x,test_y,
             num_epochs,
             save_path=None,
             shuffle_parts=1,
@@ -388,27 +391,6 @@ def train(train_fn,val_fn,
     # shuffle the train set
     best_train_loss = 100
     best_epoch = 1
-
-    #train_x = np.reshape(np.load('/volume1/users/bmoons/CUSTOM_OWNER_RECOGNITION/numpy/train_set_x.npy'),(-1,3,32,32)).astype('float32')
-    train_x = np.load('/volume1/users/bmoons/CUSTOM_OWNER_RECOGNITION/numpy/train_set_x.npy').astype('float32')
-    train_y = np.load('/volume1/users/bmoons/CUSTOM_OWNER_RECOGNITION/numpy/train_set_y.npy').astype('float32')
-    # Image.fromarray(y_[0].astype(np.uint8),'RGB').save('test.png')
-
-    #val_x = np.reshape(np.load('/volume1/users/bmoons/CUSTOM_OWNER_RECOGNITION/numpy/valid_set_x.npy'),(-1,3,32,32)).astype('float32') 
-    val_x = np.load('/volume1/users/bmoons/CUSTOM_OWNER_RECOGNITION/numpy/valid_set_x.npy').astype('float32')
-    val_y = np.load('/volume1/users/bmoons/CUSTOM_OWNER_RECOGNITION/numpy/valid_set_y.npy').astype('float32')
-
-    train_y = np.float32(np.eye(2)[train_y.astype(np.int)])    
-    val_y = np.float32(np.eye(2)[val_y.astype(np.int)])
-
-    # enlarge train data set by mirroring
-    #x_train_flip = train_x[:,:,:,::-1]
-    x_train_flip = train_x[:,:,::-1,:]
-    y_train_flip = train_y
-    train_x = np.concatenate((train_x,x_train_flip),axis=0)
-    train_y = np.concatenate((train_y,y_train_flip),axis=0)
-
-    train_x, train_y = shuffle(train_x,train_y)
     
     # We iterate over epochs:
     for epoch in range(num_epochs):
