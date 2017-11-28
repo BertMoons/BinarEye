@@ -34,7 +34,7 @@ In BinarEye, f is constrained to either 64, 128 or 256.
 
 The used datasets are built on existing datasets. 
 
-1. facedetection, ownerdetection and facerecognition are built on a combination of mini-crops of backgrounds from [Stanford](http://dags.stanford.edu/projects/scenedataset.html) and faces from [LFW] (http://vis-www.cs.umass.edu/lfw/)
+1. facedetection, ownerdetection and facerecognition are built on a combination of mini-crops of backgrounds from [Stanford](http://dags.stanford.edu/projects/scenedataset.html) and faces from [LFW](http://vis-www.cs.umass.edu/lfw/)
 2. anglerecognition is built on cropped and aligned faces from [AdienceFaces](http://www.openu.ac.il/home/hassner/Adience/data.html)
 
 All input images are rescaled to 32x32x3 input images in order to be processed by the BinarEye chip. Backgrounds are either 32x32 crops of larger images, or 32x32 rescales of larger sub-images.
