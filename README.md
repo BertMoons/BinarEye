@@ -1,5 +1,7 @@
 # BinarEye training code
 
+This code is not fully cleaned-up yet, porting might not be trivial yet.  Expect regular updates to improve upon this.
+
 ## Introduction
 Train your own __Binary Neural Networks (BNN)__ - networks trained with 1b weights and activations - in __Theano / Lasagne__.
 This code was used to train Binary Neural Networks, specifically for the BinarEye chip (reference coming up).
