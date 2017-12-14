@@ -198,7 +198,10 @@ if __name__ == "__main__":
     err = T.mean(T.neq(T.argmax(train_output, axis=1), T.argmax(target, axis=1)),dtype=theano.config.floatX)
     train_1_when_0 = T.sum(T.gt(T.argmax(train_output, axis=1),T.argmax(target, axis=1)),dtype=theano.config.floatX) # face = 0, bg = 1 : fn
     train_0_when_1 = T.sum(T.lt(T.argmax(train_output, axis=1),T.argmax(target, axis=1)),dtype=theano.config.floatX) # fp
+    # the T.invert function seems to react differently depending on theano versions... 
     train_0_when_0 = T.sum(T.invert(T.or_(T.argmax(train_output, axis=1),T.argmax(target, axis=1))),dtype=theano.config.floatX)
+    # if this does not work, try
+    # train_0_when_0 = batch_size - T.sum(T.or_(T.argmax(train_output,axis=1),T.argmax(target,axis=1))),dtype=theano.config.floatX)
     train_precision = train_0_when_0 / (train_0_when_0 + train_0_when_1) # TP/(TP+FP)
     train_recall = train_0_when_0 / (train_0_when_0 + train_1_when_0) # TP/(TP+FN)
     

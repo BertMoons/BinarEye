@@ -259,7 +259,7 @@ def train(train_fn,val_fn,
         #for x_batch, y_batch in datagen_tr.flow(train_x,train_y,batch_size=batch_size):
             #new_loss, new_err, new_1w0, new_0w1, new_precision,new_recall = train_fn(x_batch.astype('float32'),np.subtract(np.multiply(y_batch,2),1),LR)
         for i in range(nr_batches):
-            new_loss, new_err, new_1w0, new_0w1, new_precision,new_recall = train_fn(train_x[i*batch_size:(i+1)*batch_size],np.subtract(np.multiply(train_y[i*batch_size:(i+1)*batch_size],2),1),LR)
+            new_loss, new_err, new_1w0, new_0w1, new_precision,new_recall = train_fn(train_x[i*batch_size:(i+1)*batch_size],train_y[i*batch_size:(i+1)*batch_size],LR)
             loss += new_loss
             train_loss_array = np.append(train_loss_array,new_loss)
             np.save('./train_val_data/train_loss_'+run_name+'.npy',train_loss_array)
@@ -299,7 +299,7 @@ def train(train_fn,val_fn,
         #for x_batch, y_batch in datagen_val.flow_from_directory('/volume1/users/bmoons/CUSTOM_FACE_DETECTION/val/sets/',target_size=(32,32),batch_size=batch_size,class_mode='categorical'):
         #for x_batch, y_batch in datagen_val.flow(val_x,val_y,batch_size=batch_size):
         for i in range(nr_batches):
-            new_loss, new_err, new_1w0, new_0w1, new_0w0 = val_fn(val_x[i*batch_size:(i+1)*batch_size],np.subtract(np.multiply(val_y[i*batch_size:(i+1)*batch_size],2),1))
+            new_loss, new_err, new_1w0, new_0w1, new_0w0 = val_fn(val_x[i*batch_size:(i+1)*batch_size],val_y[i*batch_size:(i+1)*batch_size])
             err += new_err
             loss += new_loss
             _1w0 += new_1w0
