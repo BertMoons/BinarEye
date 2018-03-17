@@ -15,8 +15,8 @@
       <file leaf-file-name="cifar10.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../cifar10.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="354" column="0" lean-forward="true" selection-start-line="354" selection-start-column="0" selection-end-line="354" selection-end-column="0" />
+            <state relative-caret-position="510">
+              <caret line="140" column="4" lean-forward="false" selection-start-line="140" selection-start-column="4" selection-end-line="140" selection-end-column="4" />
               <folding>
                 <element signature="e#70#107#0" expanded="true" />
               </folding>
@@ -27,8 +27,8 @@
       <file leaf-file-name="binary_net.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../binary_net.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
-              <caret line="310" column="35" lean-forward="false" selection-start-line="310" selection-start-column="35" selection-end-line="310" selection-end-column="35" />
+            <state relative-caret-position="222">
+              <caret line="306" column="35" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="335" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -43,6 +43,7 @@
       <find>21</find>
       <find>inc</find>
       <find>lib64</find>
+      <find>/12</find>
       <find>train</find>
     </findStrings>
   </component>
@@ -191,16 +192,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../binary_net.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="310" column="35" lean-forward="false" selection-start-line="310" selection-start-column="35" selection-end-line="310" selection-end-column="35" />
+        <state relative-caret-position="222">
+          <caret line="306" column="35" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="335" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../cifar10.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="354" column="0" lean-forward="true" selection-start-line="354" selection-start-column="0" selection-end-line="354" selection-end-column="0" />
+        <state relative-caret-position="510">
+          <caret line="140" column="4" lean-forward="false" selection-start-line="140" selection-start-column="4" selection-end-line="140" selection-end-column="4" />
           <folding>
             <element signature="e#70#107#0" expanded="true" />
           </folding>

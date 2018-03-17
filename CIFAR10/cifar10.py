@@ -111,7 +111,7 @@ if __name__ == "__main__":
     test_set.X = np.reshape(np.subtract(np.multiply(2./255.,test_set.X),1.),(-1,3,32,32))
 
     # Number of feature maps
-    num_maps = np.floor(256/(3*256/num_filters)) # 256/12 input channels
+    num_maps = np.floor(256/(3*256/num_filters)) #  input channels per color
 
     # Quantize
     s = train_set.X / np.abs(train_set.X)
@@ -138,7 +138,7 @@ if __name__ == "__main__":
     valid_set.y = 2* valid_set.y - 1.
     test_set.y = 2* test_set.y - 1.
 
-
+    
     # enlarge train data set by mirroring
     x_train_flip = train_set.X[:,:,:,::-1]
     y_train_flip = train_set.y
