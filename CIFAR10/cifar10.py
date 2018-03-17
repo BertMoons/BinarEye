@@ -1,50 +1,45 @@
-# Copyright 2016 Matthieu Courbariaux
-
-# This file is part of BinaryNet.
-
-# BinaryNet is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-
-# BinaryNet is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-
-# You should have received a copy of the GNU General Public License
-# along with BinaryNet.  If not, see <http://www.gnu.org/licenses/>.
+# This code is adapted slightly from the Courbariaux BinaryNet paper
 
 from __future__ import print_function
 
-import sys
-import os
-import time
-import gc
+import argparse
 
 import numpy as np
 np.random.seed(1234) # for reproducibility?
-
-# specifying the gpu to use
-import theano.sandbox.cuda
-#theano.sandbox.cuda.use('gpu0') 
 import os
-os.environ["THEANO_FLAGS"] = "cuda.root=/usr/local/cuda,device=gpu,floatX=float32"
-import theano
-import theano.tensor as T
+os.system("hostname")
+import glob
+listing = glob.glob('/usr/local/cuda*')
+
+if 'LD_LIBRARY_PATH' not in os.environ:
+    os.environ['LD_LIBRARY_PATH'] = '/users/micas/bmoons/software/CUDNN/test2/lib64/:%s/lib64/'%(listing[0])
+
+if 'PYLEARN2_DATA_PATH' not in os.environ:
+    os.environ['PYLEARN2_DATA_PATH'] = '/esat/leda1/users/bmoons/PYLEARN2'
+    print ('/esat/leda1/users/bmoons/PYLEARN2')
+
+os.environ["THEANO_FLAGS"] = "cuda.root=%s,device=gpu0,lib.cnmem=0.8,floatX=float32"%(listing[0])#,exception_verbosity=high,optimizer=fast_compile,lib.cnmem=0.925
+
+
+print('path = ' +  os.environ['PATH'])
+print('ld_library_path =  ' + os.environ['LD_LIBRARY_PATH'])
+print('theano flags =  ' + os.environ['THEANO_FLAGS'])
+
 
 import lasagne
-
-import cPickle as pickle
-import gzip
+import theano.tensor as T
+import theano.sandbox.cuda
 
 import binary_net
-
-from pylearn2.datasets.zca_dataset import ZCA_Dataset   
-from pylearn2.datasets.cifar10 import CIFAR10 
-from pylearn2.utils import serial
+from pylearn2.datasets.cifar10 import CIFAR10
 
 from collections import OrderedDict
+
+parser = argparse.ArgumentParser(description='run training on facedetection dataset')
+parser.add_argument('-f','--filters',help='number of filters, typically 64 or 256', required=True, type=int)
+args = parser.parse_args()
+
+num_filters = args.filters
 
 if __name__ == "__main__":
     
@@ -77,13 +72,13 @@ if __name__ == "__main__":
     print("W_LR_scale = "+str(W_LR_scale))
     
     # Training parameters
-    num_epochs = 500
+    num_epochs = 250
     print("num_epochs = "+str(num_epochs))
 	
-	# load or run
-    train = False
+    # load or run
+    train = True
     
-    # Decaying LR 
+    # Decaying LR
     LR_start = 0.001
     print("LR_start = "+str(LR_start))
     LR_fin = 0.0000003
@@ -92,7 +87,7 @@ if __name__ == "__main__":
     print("LR_decay = "+str(LR_decay))
     # BTW, LR decay might good for the BN moving average...
 
-    save_path = "cifar10_21linput_nopadding_augmented_64ch.npz"
+    save_path = "cifar10.npz"
     print("save_path = "+str(save_path))
 
     load_path = save_path
@@ -116,7 +111,7 @@ if __name__ == "__main__":
     test_set.X = np.reshape(np.subtract(np.multiply(2./255.,test_set.X),1.),(-1,3,32,32))
 
     # Number of feature maps
-    num_maps = (256/(3*256/filters)) # 256/12 input channels
+    num_maps = np.floor(256/(3*256/num_filters)) # 256/12 input channels
 
     # Quantize
     s = train_set.X / np.abs(train_set.X)
