@@ -16,11 +16,11 @@ Running this code requires:
 3. [pylearn2](http://deeplearning.net/software/pylearn2/) for [MNIST](http://yann.lecun.com/exdb/mnist/), [SVHN](http://ufldl.stanford.edu/housenumbers/) and [CIFAR-10](https://www.cs.toronto.edu/~kriz/cifar.html)
 4. The custom datasets for facedetection, ownerrecognition, anglerecognition and 10-face facerecognition can be found here:
 
-*[Angle Recognition](https://www.esat.kuleuven.be/micas/downloads/BinarEye/CUSTOM_ANGLE_RECOGNITION.tgz)
-*[Face Detection](https://www.esat.kuleuven.be/micas/downloads/BinarEye/CUSTOM_FACEDETECTION.tgz)
-*[Face Recognition](https://www.esat.kuleuven.be/micas/downloads/BinarEye/CUSTOM_FACERECOGNITION.tgz
+* [Angle Recognition](https://www.esat.kuleuven.be/micas/downloads/BinarEye/CUSTOM_ANGLE_RECOGNITION.tgz)
+* [Face Detection](https://www.esat.kuleuven.be/micas/downloads/BinarEye/CUSTOM_FACEDETECTION.tgz)
+* [Face Recognition](https://www.esat.kuleuven.be/micas/downloads/BinarEye/CUSTOM_FACERECOGNITION.tgz
 )
-*[Owner Detection](https://www.esat.kuleuven.be/micas/downloads/BinarEye/CUSTOM_OWNERDETECTION.tgz
+* [Owner Detection](https://www.esat.kuleuven.be/micas/downloads/BinarEye/CUSTOM_OWNERDETECTION.tgz
 )
 
 ## Training your own BNN
